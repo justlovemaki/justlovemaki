@@ -2,10 +2,22 @@
 <h2 align="center">一个编辑器，一个想法，一个世界</h2>
 <h3 align="center">One IDE, one idea, one world</h3>
 <h4 align="center">个人维护AI资讯站：<a href="https://ai.hubtoday.app" alt="AI资讯日报" >AI资讯日报</a></h4>
-
-</br>  
 </div>
 
+  </br>  
+  <h3>💻 GitHub档案</h3>
+    <div style='margin-right:5vw;'>
+        <img align="center" src="https://github-readme-stats.vercel.app/api?username=justlovemaki&bg_color=ffffff00&text_color=666666&hide=contribs&show_icons=true&rank_icon=github&locale=cn" />
+        <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=justlovemaki&layout=compact&bg_color=ffffff00&text_color=666666&show_icons=true&locale=cn" />
+    </div>
+  <br/>
+
+  <h3>🔥 我的贡献</h3>
+    <p>
+      <img align="center" src="https://github-readme-streak-stats-rho-lime.vercel.app?user=justlovemaki&border_radius=12&locale=zh_Hans&card_width=755" alt="GitHub Streak" />
+    </p>
+  <br/>
+  
   <h3>🚀 我的技术栈</h3>
   <table>
     <tr>
@@ -87,16 +99,3 @@
     </tr>
   </table>
   <br/>
-  
-  <h3>💻 GitHub档案</h3>
-    <div style='margin-right:5vw;'>
-        <img align="center" src="https://github-readme-stats.vercel.app/api?username=justlovemaki&bg_color=ffffff00&text_color=666666&hide=contribs&show_icons=true&rank_icon=github&locale=cn" />
-        <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=justlovemaki&layout=compact&bg_color=ffffff00&text_color=666666&show_icons=true&locale=cn" />
-    </div>
-  <br/>
-
-  <h3>🔥 我的贡献</h3>
-    <p>
-      <img align="center" src="https://github-readme-streak-stats-rho-lime.vercel.app?user=justlovemaki&border_radius=12&locale=zh_Hans&card_width=755" alt="GitHub Streak" />
-    </p>
-
