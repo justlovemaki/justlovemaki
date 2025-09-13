@@ -1,6 +1,6 @@
 <div align="center">
 <h2 align="center">一个编辑器，一个想法，一个世界</h2>
-<h3 align="center">One IDE, one idea, one world</h3>
+<h3 align="center">one ide, one idea, one world</h3>
 <h4 align="center">个人维护AI资讯站：<a href="https://ai.hubtoday.app" alt="AI资讯日报" >AI资讯日报</a></h4>
 </div>
 
