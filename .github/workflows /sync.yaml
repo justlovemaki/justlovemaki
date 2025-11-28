@@ -1,0 +1,42 @@
+name: Sync to Gitee
+
+on:
+  # 每天北京时间凌晨 1 点运行 (UTC时间 17:00)
+  schedule:
+    - cron: '0 18 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/hub-mirror-action@master
+        with:
+          # 必选：需要同步的源端账户名 (GitHub 用户名)
+          src: github/你的GitHub用户名
+          # 必选：需要同步到的目的端账户名 (Gitee 用户名)
+          dst: gitee/你的Gitee用户名
+          # 必选：Gitee 的 SSH 私钥，对应 Secrets 中的 GITEE_PRIVATE_KEY
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          # 必选：Gitee 的私人令牌，用于创建仓库
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          # 可选：GitHub Token，用于获取仓库列表（如果包含私有仓库则必须）
+          # 如果不填，可能只能获取公开仓库且受 API 限制
+          src_token: ${{ secrets.GH_TOKEN }}
+          
+          # 以下为常用配置项：
+          
+          # 账户类型：user (个人) 或 org (组织)
+          account_type: user
+          # 是否强制更新 (覆盖 Gitee 上的修改)
+          force_update: true
+          # 只有当仓库在 Gitee 不存在时才创建，存在则更新
+          clone_style: "https" 
+          # debug: true # 如果出错，开启此项查看详细日志
+          
+          # 过滤选项 (如果你不想同步所有仓库)：
+          black_list: "imagehub" # 黑名单：不同步这些
+          # white_list: "repo_name3,repo_name4" # 白名单：只同步这些
+          # static_list: "repo_name" # 静态列表：只同步这里列出的，不自动获取列表
