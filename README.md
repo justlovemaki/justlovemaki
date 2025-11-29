@@ -7,8 +7,8 @@
   </br>  
   <h3>💻 GitHub档案</h3>
     <div style='margin-right:5vw;'>
-        <img align="center" src="https://github-readme-stats.vercel.app/api?username=justlovemaki&bg_color=ffffff00&text_color=666666&hide=contribs&show_icons=true&rank_icon=github&locale=cn" />
-        <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=justlovemaki&layout=compact&bg_color=ffffff00&text_color=666666&show_icons=true&locale=cn" />
+        <img align="center" src="https://github-readme-stats-kohl-two-59.vercel.app/api?username=justlovemaki&bg_color=ffffff00&text_color=666666&hide=contribs&show_icons=true&rank_icon=github&locale=cn" />
+        <img align="center" src="https://github-readme-stats-kohl-two-59.vercel.app/api/top-langs/?username=justlovemaki&layout=compact&bg_color=ffffff00&text_color=666666&show_icons=true&locale=cn" />
     </div>
   <br/>
 
