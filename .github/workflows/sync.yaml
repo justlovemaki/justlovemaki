@@ -15,9 +15,9 @@ jobs:
         uses: Yikun/hub-mirror-action@master
         with:
           # 必选：需要同步的源端账户名 (GitHub 用户名)
-          src: github/你的GitHub用户名
+          src: github/justlovemaki
           # 必选：需要同步到的目的端账户名 (Gitee 用户名)
-          dst: gitee/你的Gitee用户名
+          dst: gitee/justlovemaki
           # 必选：Gitee 的 SSH 私钥，对应 Secrets 中的 GITEE_PRIVATE_KEY
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           # 必选：Gitee 的私人令牌，用于创建仓库
