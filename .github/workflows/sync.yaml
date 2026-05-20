@@ -10,12 +10,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # 增加以下权限声明，允许默认的 GITHUB_TOKEN 推送修改到当前仓库
+    permissions:
+      contents: write
+      
     steps:
       # 1. 检出当前仓库代码
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
+        # 此处去掉了 token 选项，默认会使用内置的 ${{ github.token }}
 
       # 2. 写入当前日期到 version 文件
       - name: Update version file
@@ -45,8 +48,8 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           # 必选：Gitee 的私人令牌，用于创建仓库
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          # 可选：GitHub Token，用于获取仓库列表
-          src_token: ${{ secrets.GH_TOKEN }}
+          # 修改此处：使用内置的 GITHUB_TOKEN
+          src_token: ${{ secrets.GITHUB_TOKEN }}
           
           # 账户类型：user (个人) 或 org (组织)
           account_type: user
