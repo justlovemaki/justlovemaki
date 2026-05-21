@@ -56,7 +56,9 @@ jobs:
           # 是否强制更新 (覆盖 Gitee 上的修改)
           force_update: true
           # 克隆方式
-          clone_style: "https" 
+          clone_style: "ssh" 
+          lfs: true
+          timeout: '1h'
           
           # 过滤选项
           black_list: "imagehub"
