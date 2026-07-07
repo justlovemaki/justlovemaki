@@ -81,8 +81,8 @@ jobs:
           force_update: true
           # 克隆方式
           clone_style: "ssh" 
-          lfs: false
-          timeout: '10m'
+          lfs: true
+          timeout: '1h'
           
           # 因为我们在生成列表时已经手动排除了 "imagehub"，所以这里的 black_list 
           # 不再是必须的，但保留它也完全没问题（双重保险）
