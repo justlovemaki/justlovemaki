@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 增加以下权限声明，允许默认的 GITHUB_TOKEN 推送修改到当前仓库
     permissions:
       contents: write
       
@@ -18,12 +17,10 @@ jobs:
       # 1. 检出当前仓库代码
       - name: Checkout repository
         uses: actions/checkout@v4
-        # 此处去掉了 token 选项，默认会使用内置的 ${{ github.token }}
 
       # 2. 写入当前日期到 version 文件
       - name: Update version file
         run: |
-          # 获取北京时间日期 (UTC+8) 并写入 version 文件
           TZ="Asia/Shanghai" date +'%Y-%m-%d' > version
 
       # 3. 提交并推送修改到 GitHub
@@ -32,12 +29,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add version
-          # 仅在文件有变化时提交，避免无意义的构建
           git diff-index --quiet HEAD || git commit -m "chore: update version to $(date +'%Y-%m-%d')"
           git push
 
-      # === 新增步骤：在同步前打印所有可同步的仓库列表 ===
-      - name: List all synchronizable repositories
+      # === 步骤 3.5：获取可同步仓库并将其动态生成为静态列表 ===
+      - name: List and generate repository list
+        id: get-repos # 必须指定 ID，方便下游步骤通过该 ID 获取输出值
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
@@ -49,12 +46,17 @@ jobs:
             exit 1
           fi
           
-          # 1. 获取用户拥有的前 100 个仓库 (包含公开和私有)
-          # 2. 过滤掉黑名单中的 "imagehub"
-          # 3. 格式化输出为: "- [仓库名] [Private 私有 / Public 公开]"
+          # 1. 在日志中友好地打印，便于你排查
           gh repo list justlovemaki --limit 100 --json name,isPrivate \
             --jq '.[] | select(.name != "imagehub") | "- \(.name) [\(if .isPrivate then "Private 私有" else "Public 公开" end)]"'
-            
+          
+          # 2. 动态生成逗号分隔的静态列表，格式例如: "repo1,repo2,repo3"
+          # 利用 jq 直接输出 join(",") 后的单行字符串
+          REPO_LIST=$(gh repo list justlovemaki --limit 100 --json name --jq '[.[] | select(.name != "imagehub") | .name] | join(",")')
+          
+          # 3. 将变量输出到 GitHub Step Output，供下游 Step 使用
+          echo "repos=$REPO_LIST" >> "$GITHUB_OUTPUT"
+          echo "已成功生成静态列表: $REPO_LIST"
           echo "=========================================================="
 
       # 4. 同步到 Gitee
@@ -69,8 +71,9 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           # 必选：Gitee 的私人令牌，用于创建仓库
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          # 可选：GitHub Token，用于获取仓库列表
-          src_token: ${{ secrets.GH_TOKEN }}
+          
+          # 关键改动：动态传入上一步生成并导出的仓库列表
+          static_list: ${{ steps.get-repos.outputs.repos }}
           
           # 账户类型：user (个人) 或 org (组织)
           account_type: user
@@ -81,5 +84,6 @@ jobs:
           lfs: true
           timeout: '1h'
           
-          # 过滤选项
+          # 因为我们在生成列表时已经手动排除了 "imagehub"，所以这里的 black_list 
+          # 不再是必须的，但保留它也完全没问题（双重保险）
           black_list: "imagehub"
