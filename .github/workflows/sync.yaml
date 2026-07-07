@@ -36,6 +36,27 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "chore: update version to $(date +'%Y-%m-%d')"
           git push
 
+      # === 新增步骤：在同步前打印所有可同步的仓库列表 ===
+      - name: List all synchronizable repositories
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "=========================================================="
+          echo "             正在获取可同步的 GitHub 仓库列表...          "
+          echo "=========================================================="
+          if [ -z "$GH_TOKEN" ]; then
+            echo "错误: 未检测到 GH_TOKEN 秘钥，无法获取私有仓库！"
+            exit 1
+          fi
+          
+          # 1. 获取用户拥有的前 100 个仓库 (包含公开和私有)
+          # 2. 过滤掉黑名单中的 "imagehub"
+          # 3. 格式化输出为: "- [仓库名] [Private 私有 / Public 公开]"
+          gh repo list justlovemaki --limit 100 --json name,isPrivate \
+            --jq '.[] | select(.name != "imagehub") | "- \(.name) [\(if .isPrivate then "Private 私有" else "Public 公开" end)]"'
+            
+          echo "=========================================================="
+
       # 4. 同步到 Gitee
       - name: Mirror the Github organization repos to Gitee.
         uses: Yikun/hub-mirror-action@master
